@@ -1,10 +1,6 @@
 import multiprocessing
 import ctypes
 
-# Create a shared memory value
-# It is an integer with an initial value of 0
-v = multiprocessing.Value(ctypes.c_int, 0)
-
 def increment(v):
     # Manually acquire and release the lock
     v.get_lock().acquire()
@@ -16,6 +12,10 @@ def increment(v):
         v.value += 100
 
 if __name__ == '__main__':
+    # Create a shared memory value
+    # It is an integer with an initial value of 0
+    v = multiprocessing.Value(ctypes.c_int, 0)
+
     # Create n_process processes which increment the value
     n_process = 8
     processes = []
@@ -29,4 +29,3 @@ if __name__ == '__main__':
 
     # Print the value
     print(v.value)
-
