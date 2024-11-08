@@ -13,6 +13,7 @@ if __name__ == '__main__':
         p.start()
         processes.append(p)
 
-    p.join()
+    for p in processes:
+        p.join()
 
     print('Main process is done')
