@@ -13,7 +13,7 @@ if __name__ == '__main__':
     # It is an array of 6 floats with an initial value of 0
     a = multiprocessing.Array(ctypes.c_int, (0, 0, 0, 0, 0, 0))
 
-    n_rolls_total = 1000000
+    n_rolls_total = int(1e6)
 
     # Create n_process processes
     n_process = 4
