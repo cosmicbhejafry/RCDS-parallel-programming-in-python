@@ -12,7 +12,7 @@
 	// "forwardPorts": [],
 
 	// Use 'postCreateCommand' to run commands after the container is created.
-	"postCreateCommand": "./.devcontainer/post_create_commands.sh",
+	"postCreateCommand": "sudo apt update && yes | sudo apt install mpich && pip3 install --user -r requirements.txt",
 
 	// Configure tool-specific properties.
 	"customizations": {
