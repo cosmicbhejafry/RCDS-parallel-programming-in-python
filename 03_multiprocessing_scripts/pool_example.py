@@ -20,7 +20,7 @@ if __name__ == '__main__':
     # The Pool will be discarded when the block is exited
     with Pool(4) as p:
         # Apply the function f to each entry in the list
-        output = p.map(f, range(10))
+        output = p.map(f, data)
 
     # Print the output
     print(output)
