@@ -128,7 +128,7 @@ def run_multiple_realisations(n_initial, reproduction_probability, mean_lifetime
     arguments = [(n_initial, reproduction_probability, mean_lifetime, output_times, i) for i in range(n_realisations)]
 
     with multiprocessing.Pool(4) as p:
-        output_list = p.map(run_realisation_interface, arguments, chunksize=1)
+        output_list = p.map(run_realisation_interface, arguments)
 
     # Make a 2D array to store the populations of each realisation at each time
     output_populations = np.array([output[0] for output in output_list])
