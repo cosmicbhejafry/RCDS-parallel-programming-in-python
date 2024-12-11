@@ -2,3 +2,4 @@ ipykernel
 numpy
 matplotlib
 mpi4py
+pandas

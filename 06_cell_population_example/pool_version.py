@@ -2,6 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import random
 import time
+import multiprocessing
 from process_visualisation import visualise_realisation_runtimes
 import pandas as pd
 
@@ -49,6 +50,8 @@ def run_realisation(n_initial, reproduction_probability, mean_lifetime, output_t
     if seed is not None:
         random.seed(seed)
 
+    start_time = time.time()
+
     # Initialise the output array
     output_populations = np.zeros(len(output_times), dtype=int)
     output_populations[0] = n_initial
@@ -63,7 +66,14 @@ def run_realisation(n_initial, reproduction_probability, mean_lifetime, output_t
             # If the population has died out, stop the simulation
             break
 
-    return output_populations
+    runtime = time.time() - start_time
+    try:
+        process_number = int(multiprocessing.current_process().name.split('-')[-1])
+    except ValueError:
+        process_number = 0
+    realisation_number = seed
+
+    return output_populations, runtime, process_number, realisation_number
 
 
 def run_single_realisation(n_initial, reproduction_probability, mean_lifetime, output_times, output_filepath, seed=None):
@@ -77,12 +87,10 @@ def run_single_realisation(n_initial, reproduction_probability, mean_lifetime, o
     output_filepath (str): The path to save the output plot.
     '''
 
-    start_time = time.time()
-
     # Run the realisation
-    populations = run_realisation(n_initial, reproduction_probability, mean_lifetime, output_times, seed=seed)
+    populations, run_time, process_number, realisation_number = run_realisation(n_initial, reproduction_probability, mean_lifetime, output_times, seed=seed)
 
-    run_time = time.time() - start_time
+    start_time = time.time()
 
     # Plot the results
     fig, ax = plt.subplots()
@@ -94,12 +102,16 @@ def run_single_realisation(n_initial, reproduction_probability, mean_lifetime, o
         ax.set_yscale('log')
     fig.savefig(output_filepath)
 
-    plotting_time = time.time() - start_time - run_time
+    plotting_time = time.time() - start_time
 
     return run_time, plotting_time
 
 
-def run_multiple_realisations(n_initial, reproduction_probability, mean_lifetime, output_times, n_realisations, output_filepath):
+def run_realisation_interface(args):
+    return run_realisation(*args)
+
+
+def run_multiple_realisations(n_initial, reproduction_probability, mean_lifetime, output_times, n_realisations, output_filepath, n_processes=1):
     '''
     Run multiple realisations of the cell population model and plot the results.
     Parameters:
@@ -111,30 +123,22 @@ def run_multiple_realisations(n_initial, reproduction_probability, mean_lifetime
     output_filepath (str): The path to save the output plot
     '''
 
-    realisation_df = None
-
     start_time = time.time()
 
+    arguments = [(n_initial, reproduction_probability, mean_lifetime, output_times, i) for i in range(n_realisations)]
+
+    with multiprocessing.Pool(4) as p:
+        output_list = p.map(run_realisation_interface, arguments, chunksize=1)
+
     # Make a 2D array to store the populations of each realisation at each time
-    output_populations = np.zeros((n_realisations, len(output_times)))
-
-    for i_realisation in range(n_realisations):
-        # Run each realisation and store the results
-        realisation_start_time = time.time()
-        output_populations[i_realisation, :] = run_realisation(n_initial, reproduction_probability, mean_lifetime, output_times, seed=i_realisation)
-
-        # This if-block part of the instrumentation for producing figures, you can ignore it
-        if realisation_df is None:
-            realisation_df = pd.DataFrame({'number': i_realisation, 'process': 0, 'run_time': time.time() - realisation_start_time}, index=[0])
-        else:
-            realisation_df = pd.concat([realisation_df, pd.DataFrame({'number': i_realisation, 'process': 0, 'run_time': time.time() - realisation_start_time}, index=[0])])            
+    output_populations = np.array([output[0] for output in output_list])
 
     # Calculate the mean and standard deviation of the populations and survival probability at each time
     population_mean = np.mean(output_populations, axis=0)
     population_standard_deviation = np.std(output_populations, axis=0)
     survival_probability = np.sum(output_populations > 0, axis=0) / n_realisations
 
-    running_time = time.time() - start_time
+    run_time = time.time() - start_time
 
     # Plot the results
     fig, ax = plt.subplots()
@@ -150,9 +154,11 @@ def run_multiple_realisations(n_initial, reproduction_probability, mean_lifetime
     ax.set_title('Population dynamics with survival probability')
     fig.savefig(output_filepath, bbox_inches='tight')
 
-    plotting_time = time.time() - start_time - running_time
+    plotting_time = time.time() - run_time - start_time
 
-    return running_time, plotting_time, realisation_df
+    realisation_df = pd.DataFrame(output_list[1:], columns=['population', 'run_time', 'process', 'number'])
+
+    return run_time, plotting_time, realisation_df
 
 if __name__ == '__main__':
     # Some sample calls of the functions
@@ -171,8 +177,8 @@ if __name__ == '__main__':
     print(f'Growing population realisation quick death running time: {run_time}s; plotting time: {plotting_time}s')
 
     # Time and run multiple realisations
-    run_time, plotting_time, realisation_df = run_multiple_realisations(1, reproduction_probability, mean_lifetime, output_times, 200, '06_cell_population_example/multiple_realisations.png')
+    run_time, plotting_time, realisation_df = run_multiple_realisations(1, reproduction_probability, mean_lifetime, output_times, 200, '06_cell_population_example/multiple_realisations.png', n_processes=4)
     print(f'Multiple realisations running time: {run_time}s; plotting time: {plotting_time}s')
 
-    visualise_realisation_runtimes(realisation_df, '06_cell_population_example/serial_runtimes.png')
+    visualise_realisation_runtimes(realisation_df, '06_cell_population_example/pool_runtimes.png')
 
