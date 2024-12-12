@@ -168,6 +168,7 @@ def run_multiple_realisations(n_initial, reproduction_probability, mean_lifetime
 
         output_populations[i_process * n_per_process:(i_process + 1) * n_per_process, :] = new_populations
 
+        # The remainder of this for-loop is part of the instrumentation of the code and can be ignored
         new_df = pd.DataFrame({'number': range(n_per_process * (process_number - 1), n_per_process *(process_number)), 'process': [process_number] * n_per_process, 'run_time': runtimes})
 
         if realisation_df is None:

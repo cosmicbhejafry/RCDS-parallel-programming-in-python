@@ -70,6 +70,7 @@ def run_realisation(n_initial, reproduction_probability, mean_lifetime, output_t
         # If the population hasn't died out, fill in the rest of the output array with the deterministic approximation
         output_populations[i_time + 1:] = output_populations[i_time] * np.exp((output_times[i_time + 1:] - output_times[i_time])* 2.0 * (reproduction_probability - 0.5) / mean_lifetime)
 
+    # The remainder of this function is part of the instrumentation of the code and can be ignored
     runtime = time.time() - start_time
     try:
         process_number = int(multiprocessing.current_process().name.split('-')[-1])

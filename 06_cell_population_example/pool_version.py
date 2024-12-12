@@ -66,6 +66,7 @@ def run_realisation(n_initial, reproduction_probability, mean_lifetime, output_t
             # If the population has died out, stop the simulation
             break
 
+    # The remainder of this function is part of the instrumentation of the code and can be ignored
     runtime = time.time() - start_time
     try:
         process_number = int(multiprocessing.current_process().name.split('-')[-1])
