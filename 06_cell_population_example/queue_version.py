@@ -96,7 +96,7 @@ def run_single_realisation(n_initial, reproduction_probability, mean_lifetime, o
         ax.set_yscale('log')
     fig.savefig(output_filepath)
 
-    plotting_time = time.time() - run_time
+    plotting_time = time.time() - run_time - start_time
 
     return run_time, plotting_time
 

@@ -107,10 +107,6 @@ def run_single_realisation(n_initial, reproduction_probability, mean_lifetime, o
     return run_time, plotting_time
 
 
-def run_realisation_interface(args):
-    return run_realisation(*args)
-
-
 def run_multiple_realisations(n_initial, reproduction_probability, mean_lifetime, output_times, n_realisations, output_filepath, n_processes=1):
     '''
     Run multiple realisations of the cell population model and plot the results.
@@ -128,7 +124,7 @@ def run_multiple_realisations(n_initial, reproduction_probability, mean_lifetime
     arguments = [(n_initial, reproduction_probability, mean_lifetime, output_times, i) for i in range(n_realisations)]
 
     with multiprocessing.Pool(4) as p:
-        output_list = p.map(run_realisation_interface, arguments)
+        output_list = p.starmap(run_realisation, arguments)
 
     # Make a 2D array to store the populations of each realisation at each time
     output_populations = np.array([output[0] for output in output_list])
