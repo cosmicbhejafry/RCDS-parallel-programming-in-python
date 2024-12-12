@@ -2,7 +2,7 @@ from multiprocessing import Pool, current_process
 import time
 import random
 
-# This is the function we want to apply to each entry in the list
+# This is the function we want to apply to each entry in a list
 def f(x):
     # multiprocessing.current_process().name is a way to get the name of the process
     print(f'Process {current_process().name} is working on the value {x}')
