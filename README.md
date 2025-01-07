@@ -14,7 +14,9 @@ This course can be studied independently at your own pace. Make sure you have co
 
 ## Accessing Course Materials
 
-The easiest way to run the course materials in a GitHub Codespace (instructions below), which can be done on a computer room computer for a face to face session, or your own laptop. This requires no setup in advance past the pre-course instructions above. 
+The course materials are stored in this Github repository. You may review them before the course if you want to, but you don't have to.
+
+During the course you will need to be able toview the course materials and run the codes in the repository. The easiest way to run the course materials in a GitHub Codespace (instructions below), which can be done on a computer room computer for a face to face session, or your own laptop. This requires no setup in advance past the pre-course instructions above. 
 
 Alternatively, you may download the course materials on to your own computer, install [Visual Studio Code](https://code.visualstudio.com/) and install the following extensions within VS Code:
 * [Python](https://marketplace.visualstudio.com/items?itemName=ms-python.python)
