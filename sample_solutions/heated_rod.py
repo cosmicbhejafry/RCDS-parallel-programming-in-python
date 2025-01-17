@@ -3,7 +3,7 @@ import multiprocessing
 import random
 import matplotlib.pyplot as plt
 
-def find_peak_temeprature(boundary_temeprature, heating_rate, rod_length, diffusion_coefficient, n_points):
+def find_peak_temeprature(boundary_temeprature, heating_rate, rod_length, diffusion_coefficient, n_points=100):
     '''
     Find the peak staedy state temperature in a rod heated at a constant rate.
     
@@ -66,7 +66,7 @@ if __name__ == '__main__':
     n_processes = 4
     
     # Create a list of arguments for the function
-    arguments = [(300, 10, 10, 0.9 + 0.2 * random.random(), 100) for _ in range(n_samples)]
+    arguments = [(300, 10, 10, 0.9 + 0.2 * random.random()) for _ in range(n_samples)]
     # Create a pool of processes
     with multiprocessing.Pool(n_processes) as pool:
         # Use the pool to calculate the results
