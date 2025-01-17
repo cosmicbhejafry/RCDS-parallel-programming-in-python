@@ -59,4 +59,5 @@ def make_histogram(data):
     plt.savefig('outputs/peak_temperature_histogram.png')
 
 # An example call to the function
+# This uses the same values as the problem description, with a thermal diffusivity of 1
 print(find_peak_temeprature(300, 10, 10, 1))
