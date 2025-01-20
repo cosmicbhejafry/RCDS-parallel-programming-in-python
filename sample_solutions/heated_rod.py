@@ -9,10 +9,10 @@ def find_peak_temeprature(boundary_temeprature, heating_rate, rod_length, diffus
     
     Parameters
 
-    boundary_temperature (float): The temperature of the rod at the left and right boundaries.
-    heating_rate (float): The rate at which the rod is heated.
-    rod_length (float): The length of the rod.
-    diffusion_coefficient (float): The diffusion coefficient of the rod.
+    boundary_temperature (float): The temperature of the rod at the left and right boundaries (K).
+    heating_rate (float): The rate at which the rod is heated (K/s).
+    rod_length (float): The length of the rod (m).
+    diffusion_coefficient (float): The diffusion coefficient of the rod (m^2s^-1).
     n_points (int): The number of points to use in the numerical solution.
     '''
 
