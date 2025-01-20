@@ -3,7 +3,7 @@ import multiprocessing
 import random
 import matplotlib.pyplot as plt
 
-def find_peak_temeprature(boundary_temeprature, heating_rate, rod_length, diffusion_coefficient, n_points=100):
+def get_peak_temeprature(boundary_temeprature, heating_rate, rod_length, diffusion_coefficient, n_points=100):
     '''
     Find the peak staedy state temperature in a rod heated at a constant rate.
     
@@ -42,7 +42,7 @@ def find_peak_temeprature(boundary_temeprature, heating_rate, rod_length, diffus
 
     return peak_temperature
 
-def make_histogram(data):
+def plot_histogram(data):
     '''
     Make a histogram of the data and save it to a file.
     
@@ -72,6 +72,6 @@ if __name__ == '__main__':
         # Use the pool to calculate the results
         # Use starmap to pass the arguments to the function
         # The results will be returned in a list
-        results = pool.starmap(find_peak_temeprature, arguments)
+        results = pool.starmap(get_peak_temeprature, arguments)
     # We can pass the results straight to the plotting function
-    make_histogram(results)
+    plot_histogram(results)

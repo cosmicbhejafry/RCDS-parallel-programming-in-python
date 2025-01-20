@@ -1,7 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-def find_peak_temeprature(boundary_temeprature, heating_rate, rod_length, diffusion_coefficient, n_points=100):
+def get_peak_temeprature(boundary_temeprature, heating_rate, rod_length, diffusion_coefficient, n_points=100):
     '''
     Find the peak staedy state temperature in a rod heated at a constant rate.
     
@@ -40,7 +40,7 @@ def find_peak_temeprature(boundary_temeprature, heating_rate, rod_length, diffus
 
     return peak_temperature
 
-def make_histogram(data):
+def plot_histogram(data):
     '''
     Make a histogram of the data and save it to a file.
     
@@ -60,4 +60,4 @@ def make_histogram(data):
 
 # An example call to the function
 # This uses the same values as the problem description, with a thermal diffusivity of 1
-print(find_peak_temeprature(300, 10, 10, 1))
+print(get_peak_temeprature(300, 10, 10, 1))
