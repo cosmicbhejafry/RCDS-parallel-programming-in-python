@@ -11,7 +11,7 @@ def roll_n_dice(n, array):
 if __name__ == '__main__':
     # Create a shared memory array
     # It is an array of 6 floats with an initial value of 0
-    a = multiprocessing.Array(ctypes.c_int, (0, 0, 0, 0, 0, 0))
+    a = multiprocessing.Array(ctypes.c_int, 6)
 
     n_rolls_total = int(1e6)
 
