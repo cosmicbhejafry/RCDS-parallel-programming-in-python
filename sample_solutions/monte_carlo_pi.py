@@ -46,8 +46,8 @@ if __name__ == '__main__':
     n_points_inside_circle = 0
 
     for p in processes:
-        # Wait for each process to finish and add the number of points inside the circle
-        p.join()
+        # Add the number of points inside the circle
+        # There is no need to wait for the processes to finish as get blocks until the result is available
         n_points_inside_circle += queue.get()
 
     # Calculate the value of pi
