@@ -3,10 +3,14 @@ import ctypes
 import random
 
 def roll_n_dice(n, array):
+    local_results = [0, 0, 0, 0, 0, 0]
     for i in range(n):
         current_roll = random.randint(1, 6)
-        with array.get_lock():
-            array[current_roll - 1] += 1
+        local_results[current_roll - 1] += 1
+
+    with array.get_lock():
+        for i in range(6):
+            array[i] += local_results[i]
 
 if __name__ == '__main__':
     # Create a shared memory array
