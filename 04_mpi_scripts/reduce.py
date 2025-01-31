@@ -18,7 +18,7 @@ if rank < n % n_rank:
     # This is to ensure that the right number of numbers are generated
     n_local += 1
 
-# Generate the random numbers
+# Generate the random numbers and check how many are less than 0.5
 numbers_local = np.random.rand(n_local)
 count_local = np.sum(numbers_local < 0.5)
 
