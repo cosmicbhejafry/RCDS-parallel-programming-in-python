@@ -3,9 +3,9 @@ import multiprocessing
 import random
 import matplotlib.pyplot as plt
 
-def get_peak_temeprature(boundary_temeprature, heating_rate, rod_length, diffusion_coefficient, n_points=100):
+def get_peak_temperature(boundary_temperature, heating_rate, rod_length, diffusion_coefficient, n_points=100):
     '''
-    Find the peak staedy state temperature in a rod heated at a constant rate.
+    Find the peak steady state temperature in a rod heated at a constant rate.
     
     Parameters
 
@@ -31,8 +31,8 @@ def get_peak_temeprature(boundary_temeprature, heating_rate, rod_length, diffusi
     diffusion_matrix[-1, -2] = 0
 
     rhs = np.full(n_points, -heating_rate)
-    rhs[0] = boundary_temeprature
-    rhs[-1] = boundary_temeprature
+    rhs[0] = boundary_temperature
+    rhs[-1] = boundary_temperature
 
     # Solve the system of equations
     temperature = np.linalg.solve(diffusion_matrix, rhs)
@@ -72,6 +72,6 @@ if __name__ == '__main__':
         # Use the pool to calculate the results
         # Use starmap to pass the arguments to the function
         # The results will be returned in a list
-        results = pool.starmap(get_peak_temeprature, arguments)
+        results = pool.starmap(get_peak_temperature, arguments)
     # We can pass the results straight to the plotting function
     plot_histogram(results)
