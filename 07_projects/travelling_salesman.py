@@ -64,7 +64,7 @@ def get_city_distances(filepath='data/city_distances.csv'):
 
 # Some example calls
 my_list = ['A', 'B', 'C', 'D']
-print(f'Permuation 3 of the list {my_list} is {get_permutation(my_list, 3)}')
+print(f'Permutation 3 of the list {my_list} is {get_permutation(my_list, 3)}')
 
 city_names, distances = get_city_distances()
 print(f'The distance between {city_names[0]} and {city_names[1]} is {distances[0, 1]}km')
