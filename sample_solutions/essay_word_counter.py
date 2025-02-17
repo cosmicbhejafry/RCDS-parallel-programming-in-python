@@ -4,9 +4,9 @@ import string
 import mpi4py.MPI as MPI
 
 
-def count_word_occurences_in_file(file_path):
+def count_word_occurrences_in_file(file_path):
     '''
-    Count the occurences of each word in a file.
+    Count the occurrences of each word in a file.
     
     Args:
         file_path (str): The path to the file to analyze.
@@ -25,16 +25,16 @@ def count_word_occurences_in_file(file_path):
     # Split the text into a list of words
     words = text.split()    
 
-    # Create a dictionary to store the word occurences
-    word_occurences = {}
+    # Create a dictionary to store the word occurrences
+    word_occurrences = {}
     for word in words:
         # Add the word to the dictionary if it doesn't exist, otherwise increment the count
-        if word in word_occurences:
-            word_occurences[word] += 1
+        if word in word_occurrences:
+            word_occurrences[word] += 1
         else:
-            word_occurences[word] = 1
+            word_occurrences[word] = 1
 
-    return sort_dict_by_value(word_occurences)
+    return sort_dict_by_value(word_occurrences)
 
 
 def sort_dict_by_value(d):
@@ -90,7 +90,7 @@ def add_dictionaries(d1, d2):
 # This is a new function which will be called on each rank to count the words in a range of essays
 def count_words_in_essays(i_first, i_last):
     '''
-    Count the occurences of each word in a range of essays.
+    Count the occurrences of each word in a range of essays.
 
     Args:
         i_first (int): The index of the first essay.
@@ -107,10 +107,10 @@ def count_words_in_essays(i_first, i_last):
         # Get the file path for the current essay
         file_path = form_filepath(i)
 
-        # Count the word occurences in the current essay
-        word_count = count_word_occurences_in_file(file_path)
+        # Count the word occurrences in the current essay
+        word_count = count_word_occurrences_in_file(file_path)
 
-        # Add the word occurences from the current essay to the total word count
+        # Add the word occurrences from the current essay to the total word count
         total_word_count = add_dictionaries(total_word_count, word_count)
 
     return total_word_count
@@ -128,7 +128,7 @@ i_max = 999
 i_first = int(rank * (i_max + 1) / n_rank)
 i_last = int((rank + 1) * (i_max + 1) / n_rank) - 1
 
-# Count the word occurences in the range of essays
+# Count the word occurrences in the range of essays
 # By counting words and combining on each rank we reduce the amount of information that needs to be gathered to and processed on rank 0
 # Call the new function written above
 word_count = count_words_in_essays(i_first, i_last)
@@ -143,7 +143,7 @@ if rank == 0:
     for wc in word_counts:
         total_word_count = add_dictionaries(total_word_count, wc)
 
-    # Sort the word counts by the number of occurences
+    # Sort the word counts by the number of occurrences
     # There was no point in sorting the word count on each rank, as we need to sort the total word count
     total_word_count = sort_dict_by_value(total_word_count)
 

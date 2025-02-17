@@ -1,8 +1,8 @@
 import string
 
-def count_word_occurences_in_file(file_path):
+def count_word_occurrences_in_file(file_path):
     '''
-    Count the occurences of each word in a file.
+    Count the occurrences of each word in a file.
     
     Args:
         file_path (str): The path to the file to analyze.
@@ -21,16 +21,16 @@ def count_word_occurences_in_file(file_path):
     # Split the text into a list of words
     words = text.split()    
 
-    # Create a dictionary to store the word occurences
-    word_occurences = {}
+    # Create a dictionary to store the word occurrences
+    word_occurrences = {}
     for word in words:
         # Add the word to the dictionary if it doesn't exist, otherwise increment the count
-        if word in word_occurences:
-            word_occurences[word] += 1
+        if word in word_occurrences:
+            word_occurrences[word] += 1
         else:
-            word_occurences[word] = 1
+            word_occurrences[word] = 1
 
-    return sort_dict_by_value(word_occurences)
+    return sort_dict_by_value(word_occurrences)
 
 def sort_dict_by_value(d):
     '''
@@ -84,19 +84,19 @@ if __name__ == '__main__':
     # A sample usage of the functions on the first two essays (essay_000.txt)
     # Get the filepath
     file_path = form_filepath(0)
-    # Count the occurences of each word in the file
-    word_occurences_0 = count_word_occurences_in_file(file_path)
+    # Count the occurrences of each word in the file
+    word_occurrences_0 = count_word_occurrences_in_file(file_path)
 
     # Repeat for the second file
     file_path = form_filepath(1)
-    word_occurences_1 = count_word_occurences_in_file(file_path)
+    word_occurrences_1 = count_word_occurrences_in_file(file_path)
 
     # Add the two dictionaries together
-    combined_word_occurences = add_dictionaries(word_occurences_0, word_occurences_1)
+    combined_word_occurrences = add_dictionaries(word_occurrences_0, word_occurrences_1)
 
     # Sort the combined dictionary by value
-    sorted_word_occurences = sort_dict_by_value(combined_word_occurences)
+    sorted_word_occurrences = sort_dict_by_value(combined_word_occurrences)
     
     # Print the sorted dictionary
-    print(sorted_word_occurences)
+    print(sorted_word_occurrences)
     
