@@ -1,11 +1,12 @@
 # Run this script with the terminal command `mpiexec -n 2 python deadlock.py`
 
-from mpi4py import MPI
+from mpi4py import MPI # type: ignore
 
 # Get the communicator and the rank of the process
 comm = MPI.COMM_WORLD
 rank = comm.Get_rank()
 
+# changing the order of the send resolves the deadlock
 if rank == 0:
     # Receive the message from rank 1
     data = comm.recv(source=1)
