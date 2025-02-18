@@ -62,6 +62,7 @@ def calculate_range_distribution(n_samples, n_bins, min_angle, max_angle, min_ve
         # Find the bin that the range falls into and increment the counter for that bin
         i_bin = int((range_current - min_range) / (max_range - min_range) * n_bins)
         bin_counts[i_bin] += 1
+    
 
     return bin_boundaries, bin_counts
 
