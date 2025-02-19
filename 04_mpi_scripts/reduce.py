@@ -26,17 +26,20 @@ count_local = np.sum(numbers_local < 0.5)
 print(f'Rank {rank} has generated {n_local} numbers, and {count_local} are less than 0.5')
 
 # Reduce the count of numbers less than 0.5 from all ranks to rank 0
+# collecting all the data at root
 count = comm.reduce(count_local, op=MPI.SUM, root=0)
 
 # Rank 0 now has the total count
 if rank == 0:
-    print(f'Rank {rank} has the overall result of {count} numbers less than 0.5')
+    print(f'xyz Rank {rank} has the overall result of {count} numbers less than 0.5')
 else:
     # Reduce returns None on all ranks other than the root
     print(f'On rank {rank}, the value of count is {count}')
 
 # If we want all ranks to have the total count, we can use allreduce
 # This does not require a root rank
+# all reduce sends it to every rank
+# each instance has its own copy of the variable 'count_all' with the same value
 count_all = comm.allreduce(count_local, op=MPI.MIN)
 
 print(f'On rank {rank}, the value of count_all is {count_all}')

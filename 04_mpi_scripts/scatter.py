@@ -15,7 +15,12 @@ if rank == 0:
     data_local = []
     for i in range(n_rank):
         data_local.append(data[int(i*n_per_rank):int((i+1)*n_per_rank)])
+
+    # unequal data_local example
+    # data_local = [[0,1],[2,3,4,5,6,7]]
+
     print(f'Rank 0 has prepared the data in data_local before sending: {data_local}')
+    
 else:
     # If the rank is not 0, we still need the variable to exist
     # Set it to None for now
